@@ -3,9 +3,10 @@ require('express-async-errors');
 
 const express = require('express');
 const app = express();
+const cors = require("cors");
 
 // database
-const connectDB = require('./db/connect');
+const connectDB = require("./db/connect");
 const fileUpload = require("express-fileupload");
 const cloudinary = require("cloudinary").v2;
 cloudinary.config({
@@ -23,7 +24,8 @@ const errorHandlerMiddleware = require("./middleware/error-handler");
 // middlewares
 app.use(express.static("./public"));
 app.use(express.json());
-app.use(fileUpload());
+app.use(fileUpload({ useTempFiles: true }));
+app.use(cors());
 
 // routes
 app.get("/", (req, res) => {
